@@ -1,0 +1,1 @@
+print("Deprecated: This project no longer uses SQLite. Use the MongoDB-backed APIs instead.")

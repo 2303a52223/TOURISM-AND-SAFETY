@@ -1,0 +1,1 @@
+print("Deprecated: Admin login logic tests based on SQLite are removed. Use MongoDB-backed flows.")

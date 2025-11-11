@@ -1,0 +1,1 @@
+print("Deprecated: SQLite admin storage checks are removed. Use the MongoDB-backed admin APIs.")
