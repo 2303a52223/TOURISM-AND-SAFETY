@@ -2,8 +2,10 @@ services:
   - type: web
     name: tourist-safety-system
     env: python
-    buildCommand: "./build.sh"
-    startCommand: "gunicorn --chdir backend --bind 0.0.0.0:$PORT app:app"
+    region: oregon
+    plan: free
+    buildCommand: "pip install --upgrade pip && pip install -r backend/requirements.txt"
+    startCommand: "cd backend && gunicorn --bind 0.0.0.0:$PORT app:app --workers 2 --timeout 120"
     envVars:
       - key: PYTHON_VERSION
         value: 3.11.0
