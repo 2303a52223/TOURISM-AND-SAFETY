@@ -4,11 +4,12 @@ services:
     env: python
     region: oregon
     plan: free
+    rootDir: tourist-safety-system
     buildCommand: "pip install --upgrade pip && pip install -r backend/requirements.txt"
-    startCommand: "cd backend && gunicorn --bind 0.0.0.0:$PORT app:app --workers 2 --timeout 120"
+    startCommand: "cd backend && gunicorn --bind 0.0.0.0:$PORT app:app --workers 1 --timeout 120 --log-level debug"
     envVars:
       - key: PYTHON_VERSION
-        value: 3.11.0
+        value: "3.11"
       - key: FLASK_ENV
         value: production
       - key: PORT
