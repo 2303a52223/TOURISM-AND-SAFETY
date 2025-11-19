@@ -1,5 +1,5 @@
-# Use Python 3.9 slim image
-FROM python:3.9-slim
+# Use Python 3.11 slim image
+FROM python:3.11-slim
 
 # Set working directory
 WORKDIR /app
@@ -11,12 +11,11 @@ RUN apt-get update && apt-get install -y \
 
 # Copy requirements and install Python dependencies
 COPY backend/requirements.txt ./
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt
 
 # Copy the entire project
 COPY . .
-
-# No local database directory needed; using MongoDB
 
 # Set environment variables
 ENV FLASK_ENV=production
@@ -28,10 +27,5 @@ EXPOSE 5000
 # Change to backend directory and run the application via Gunicorn for production
 WORKDIR /app/backend
 
-# Environment variable allowing override of workers etc.
-ENV GUNICORN_WORKERS=3
-ENV GUNICORN_THREADS=2
-ENV GUNICORN_TIMEOUT=90
-
-# Default command (can be overridden) using gunicorn
-CMD ["gunicorn", "-c", "../gunicorn.conf.py", "wsgi:app"]
+# Default command using gunicorn directly (simpler approach)
+CMD ["gunicorn", "--bind", "0.0.0.0:5000", "app:app", "--workers", "1", "--timeout", "120", "--access-logfile", "-", "--error-logfile", "-"]
